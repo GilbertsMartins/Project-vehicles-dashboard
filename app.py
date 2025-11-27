@@ -35,8 +35,9 @@ if build_table: # Se o checkbox for selecionado
     hist_option_brand = st.selectbox('Select the brand', 
                            filter_by_price['manufacture'].unique(), 
                            placeholder="Select the brand...")
+    
     st.write('Brand: ', hist_option_brand) # escrever a fabricante selecionada
-    #if hist_option_brand: # se a fabricante for selecionada
+
     # Filtrando a tabela pela marca escolhida pelo usuário
     filtered_models = filter_by_price[filter_by_price['manufacture'] == hist_option_brand]['model'].unique()
 
@@ -45,16 +46,18 @@ if build_table: # Se o checkbox for selecionado
                         filtered_models, 
                         placeholder="Select the brand...")
     st.write('Model: ', hist_option_model) # escrever o modelo selecionado
-    # criar um histograma
     
     # escrever uma mensagem
     st.write('The histogram shows the distribution of vehicle prices, with colors representing different model years.')
+    # Filtrando a tabela 'filter_by_price' pela fabricante e modelo selecionado.
     filtered_cars = filter_by_price[(filter_by_price['manufacture'] == hist_option_brand) & 
                             (filter_by_price['model'] == hist_option_model)]
+    # Simplificando cores para utilizar no histograma, assim evitando mais de 20 cores no gráfico
     filtered_cars['year_range'] = pd.cut(filtered_cars['model_year'], 
                             bins=[1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020], 
                             labels=['1941-1950', '1951-1960', '1961-1970', '1971-1980', '1981-1990', 
-                                    '1991-2000', '2001-2010', '2011-2020'])
+                                    '1991-2000', '2001-2010', '2011-2020']) # 8 possíveis cores
+    # Criando histograma
     fig = px.histogram(filtered_cars, x='price', 
                             title=(f'Distribution of Prices - {hist_option_brand} | {hist_option_model}'), 
                             color='year_range',
