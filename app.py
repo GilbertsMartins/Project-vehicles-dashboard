@@ -17,7 +17,7 @@ st.header('A dataset view of used vehicles for sale')
 # escrever uma mensagem 
 st.write('This is a way to filter vehicles by the price you choose.')
 # Filter vehicles by price using this button
-build_table = st.checkbox('Filter') # checkbox para começar as filtragens.
+build_table = st.button('Filter') # checkbox para começar as filtragens.
 
 if build_table: # Se o checkbox for selecionado
     # Inserir o valor mínimo que será utilizado para filtrar o dateset
@@ -81,4 +81,4 @@ if build_table: # Se o checkbox for selecionado
     st.plotly_chart(fig, width='stretch')
 
 else:
-    st.write('Check the box to use the app.')
+    st.write('Click to use the app.')
