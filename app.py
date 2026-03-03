@@ -17,40 +17,70 @@ car_data['model_year'] = car_data['model_year'].astype(int) # forçando dados IN
 car_data['price'] = car_data['price'].astype(int) # forçando dados INT na coluna
 car_data['price'] = car_data['price'].clip(lower=1000, upper=100000) # limitando o valor máximo da coluna 'price' para 100.000 
 
-# escrever uma mensagem 
-st.write('Filter the dataset by price, brand, and model to explore the used vehicle market. Visualize the distribution of vehicle prices based on different model years and discover insights about the market trends.')
 
-# inserir o valor mínimo que será utilizado para filtrar o dateset
-by_price_min = st.number_input('Insert the min value of the vehicle',
-                            value=None, placeholder='Type the price... $USD')
-# inserir o valor máximo que será utilizado para filtrar o dateset
-by_price_max = st.number_input('Insert the max value of the vehicle',
-                            value=None, placeholder='Type the price... $USD')
-# filtrar o dataset com base nos valores inseridos.
-filter_by_price = car_data[(car_data['price'] >= by_price_min) & (car_data['price'] <= by_price_max)]
-# mostrar a tabela filtrada
-st.dataframe(filter_by_price)
+with st.sidebar:
+        # inserir o valor mínimo que será utilizado para filtrar o dateset
+        by_price_min = st.number_input('Insert the min value of the vehicle',
+                                value=None, placeholder='Type the price... $USD')
+        # inserir o valor máximo que será utilizado para filtrar o dateset
+        by_price_max = st.number_input('Insert the max value of the vehicle',
+                                value=None, placeholder='Type the price... $USD')
 
-# selectbox para a fabricante do veículo
-hist_option_brand = st.selectbox('Select the brand', 
-                        filter_by_price['manufacture'].unique(), 
-                        placeholder="Select the brand...")
+        # filtrar o dataset com base nos valores inseridos.
+        filter_by_price = car_data[(car_data['price'] >= by_price_min) & (car_data['price'] <= by_price_max)]
+        # mostrar a tabela filtrada
+        st.metric(label="Filtered Rows", value=len(filter_by_price))
 
-# escrever a fabricante selecionada
-st.write('Brand: ', hist_option_brand) 
+        # selectbox para a fabricante do veículo
+        hist_option_brand = st.selectbox('Select the brand', 
+                                filter_by_price['manufacture'].unique(), 
+                                placeholder="Select the brand...")
 
-# filtrando a tabela pela marca escolhida pelo usuário
-filtered_models = filter_by_price[filter_by_price['manufacture'] == hist_option_brand]['model'].unique()
+        # escrever a fabricante selecionada
+        st.write('Brand: ', hist_option_brand) 
 
-# selectbox para o modelo do veículo
-hist_option_model = st.selectbox('Select the model', 
-                    filtered_models, 
-                    placeholder="Select the model...")
+        # filtrando a tabela pela marca escolhida pelo usuário
+        filtered_models = filter_by_price[filter_by_price['manufacture'] == hist_option_brand]['model'].unique()
+
+        # selectbox para o modelo do veículo
+        hist_option_model = st.selectbox('Select the model', 
+                        filtered_models, 
+                        placeholder="Select the model...")
+
+# calculando as métricas com base nos dados filtrados pelo usuário
+total_vehicles = len(filter_by_price)
+price_avg = filter_by_price['price'].mean()
+odometer_avg = filter_by_price['odometer'].mean()
+
+# separando o topo da página em 3 colunas
+kpi1, kpi2, kpi3 = st.columns(3)
+
+# preenche cada coluna com um st.metric
+with kpi1:
+    st.metric(
+        label="🚗 Total Vehicles", 
+        value=f"{total_vehicles:,}".replace(",", ".")
+    )
+
+with kpi2:
+    st.metric(
+        label="💰 AVG Price", 
+        value=f"${price_avg:,.2f}"
+    )
+
+with kpi3:
+    st.metric(
+        label="🛣️ AVG Miles", 
+        value=f"{odometer_avg:,.0f} mi"
+    )
+# adiciona uma linha de separação visual
+st.divider()
+
+# escrever uma mensagem
+st.subheader('Vehicle Concentration by Price Range and Year')
 
 # escrever o modelo selecionado
 st.write('Model: ', hist_option_model)
-# escrever uma mensagem
-st.write('The histogram shows the distribution of vehicle prices, with colors representing different model years.')
 
 # filtrando a tabela 'filter_by_price' pela fabricante e modelo selecionado.
 filtered_cars = filter_by_price[(filter_by_price['manufacture'] == hist_option_brand) & 
@@ -65,29 +95,46 @@ fig = px.histogram(filtered_cars, x='price',
                         title=(f'Distribution of Prices - {hist_option_brand} | {hist_option_model}'), 
                         color='year_range',
                         labels={'price': 'Price ($USD)', 'year_range': 'Model Year Range'})
-# exibir um gráfico Plotly interativo
-st.plotly_chart(fig, width='stretch')
-
-# escrever uma mensagem
-st.write('The chart above displays data from the advertisements, showing the cars’ ' \
-        'odometer readings and model years. The odometer values are reported in miles.')
 # criar um gráfico de dispersão
-fig = px.scatter(filtered_cars, 
-                 x='odometer', 
-                 y='model_year',
-                 title=f'Odometer vs Model Year - {hist_option_brand} | {hist_option_model}',
+fig2 = px.scatter(filtered_cars, 
+                 x='model_year', 
+                 y='odometer',
+                 title=f'Model Year vs Odometer - {hist_option_brand} | {hist_option_model}',
                  labels={'odometer': 'Odometer (miles)', 'model_year': 'Model Year'})
-# exibir um gráfico Ploty interativo
-st.plotly_chart(fig, width='stretch')
+# criando duas colunas de larguras iguais
+col1, col2 = st.columns(2)
 
-# escrever uma mensagem
-st.write('The bar chart below shows the vehicles filtered by manufacturer and type, ' \
-    'with the data directly connected to the table generated based on the minimum and maximum values defined by the user.')
+with col1:
+    # exibir um gráfico Ploty interativo
+    st.plotly_chart(fig, use_container_width=True)
+with col2:
+    # exibir um gráfico Ploty interativo
+    st.plotly_chart(fig2, use_container_width=True)
+
+# verificando se as duas variáveis contêm números válidos
+if by_price_min is not None and by_price_max is not None:
+    st.subheader('Tipos de Veículos Disponíveis (${:,.0f} - {:,.0f})'.format(by_price_min, by_price_max))
+else:
+    # título alternativo de segurança caso o utilizador apague os números do filtro
+    st.subheader("Tipos de Veículos Disponíveis")
+
+# o parâmetro 'normalize=True' devolve a proporção de 0 a 1 em vez da contagem absoluta
+type_percentages = filter_by_price['type'].value_counts(normalize=True)
+# filtra apenas os tipos de veículos que representam menos de 5% (0.05)
+types_to_group = type_percentages[type_percentages < 0.05].index
+# usamos o método .replace() para trocar a lista de tipos minoritários por uma única string
+filter_by_price['type_grouped'] = filter_by_price['type'].replace(types_to_group, 'Other')
+
 # criar um gráfico de barras
 fig = px.bar(filter_by_price, 
-             x='manufacture', 
-             color='type', 
-             title='Vehicles types by manufacture',
-             labels={'manufacture': 'Manufacture', 'type': 'Vehicle Type'})
+             y='type_grouped', 
+             color='type_grouped', 
+             title='Distribution of Vehicle Types',
+             labels={'manufacture': 'Manufacture', 'type_grouped': 'Vehicle Type'},
+             orientation='h')
 # exibir um gráfico plotly interativo
 st.plotly_chart(fig, width='stretch')
+
+with st.expander('View raw data 📊'):
+    st.write('The table below shows the data filtered by price, brand, and model. ')
+    st.dataframe(filtered_cars)

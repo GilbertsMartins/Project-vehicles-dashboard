@@ -1,6 +1,15 @@
 import streamlit as st #type: ignore
 
-st.header('Welcome to the used vehicles dashboard!')
-st.write('Enjoy exploring the data and discovering insights about the used vehicle market in 🇺🇸 🦅 🦅‼️‼️')
-st.write('This dashboard is built using Streamlit, a powerful framework for creating interactive web applications with Python. It allows us to easily create a user-friendly interface for exploring and visualizing data. Feel free to experiment with the filters and visualizations to uncover interesting trends and patterns in the used vehicle market.')
-st.write('If you have any questions or feedback about the dashboard, please feel free to reach out. We hope you find this tool useful for exploring the used vehicle market and making informed decisions when buying or selling a vehicle. Happy exploring!')
+st.header('Welcome to the Used Vehicles Dashboard 🚗')
+
+st.write('Explore the dynamics of the US used vehicle market through interactive data visualization.')
+
+st.write('This dashboard was designed to help buyers, sellers, and market analysts make informed decisions by uncovering key trends and patterns in vehicle pricing and availability.')
+
+st.write('🔍 What you will find here:')
+st.write('* **Price Analysis:** Understand how factors like mileage, model year, and vehicle condition impact the final price.')
+st.write('* **Market Trends:** Identify the most popular vehicle types and brands currently in the market.')
+st.write('* **Interactive Filters:** Customize your view by selecting specific manufacturers, price ranges, and more to tailor the insights to your needs.')
+
+st.write('---')
+st.write('*Feel free to navigate to the **Dashboard** page using the sidebar to start exploring. If you have any feedback or questions, please reach out!*')
