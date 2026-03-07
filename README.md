@@ -1,62 +1,69 @@
-# Project-vehicles-dashboard 🏎️🚙🚗🚓
-Esse projeto conta com um aplicativo web utilizando funções do streamlit para entregar um acesso interativo e agradável ao banco de dados onde se encontram os carros listados para venda, como também acompanha um arquivo notebook que auxilia na observação dos dados tratados, e criação dos gráficos. 
+# 🚙 DriveData - Explorador de Veículos Usados 🚗
+Este projeto é uma aplicação web interativa construída com **Streamlit**, projetada para explorar e visualizar um banco de dados de veículos usados listados para venda. Além do aplicativo web, o repositório inclui um notebook Jupyter (`EDA.ipynb`) com todo o tratamento de dados e análises exploratórias detalhadas.
 
 ## 🚀 Começando
-Essas instruções permitirão que você obtenha uma cópia do projeto em operação na sua máquina local para fins de desenvolvimento e teste, como também contará com o link de acesso ao aplicativo web para acesso via navegadores, e por fim também poderá executar nosso projeto criado no formato do jupyter notebook para criação de gráficos interativos.
 
-### 📋 Pré-requisitos
-Para acessar o aplicativo web utilize um navegador de sua preferência clicando no hyperlink a seguir - [project-vehicles-dashboard](https://project-vehicles-dashboard.onrender.com) 
+Estas instruções permitirão que você acesse o projeto online ou obtenha uma cópia para rodar na sua máquina local para fins de desenvolvimento e teste.
 
-Para o arquivo que se encontra dentro do diretório [notebooks](https://github.com/GilbertsMartins/Project-vehicles-dashboard/tree/main/notebooks) recomendo utilizar o [VsCode](https://code.visualstudio.com), juntamente com a extensão jupyter notebook para abertura do arquivo ".ipynb".
+### 🌐 Acesso Rápido (Web App)
+Você pode acessar o aplicativo web diretamente pelo navegador clicando no link abaixo:
+👉 **[Acessar o Web App no Render](LINK_DO_SEU_APP_AQUI)**
 
-Neste projeto foram utilizadas algumas bibliotecas que estão listadas em [requirements](https://github.com/GilbertsMartins/Project-vehicles-dashboard/blob/main/requirement.txt), as mesmas são de extrema importância para o desenvolvimento e execução do código criado.
+*(Nota: Como o projeto está hospedado em um serviço de nuvem gratuito, o primeiro carregamento da página pode levar alguns instantes. Agradeço a paciência!)*
 
-### 🔧 Instalação
-- O aplicativo web é acessado diretamente pelo link, sendo apenas necessário aguardar a inicialização do mesmo (pode levar alguns breves minutos), pois o mesmo se encontra hospedado na plataformar Render, e por falta de orçamento "$$$" estamos utilizando o modo gratuito. (sorry about that rsrs)
-- Para executar o "EDA.ipynb" prontamente e ter acesso aos gráficos criados, é necessário utilizar um editor compatível com arquivos ".ipynb".
-- Para realizar modificações em sua máquina local no arquivo principal do aplicativo web "app.py", pode-se utilizar a IDE de sua preferência.
+## 📋 Pré-requisitos e Ferramentas
 
-**Recomendo as seguintes versões do python e bibliotecas:**
+Para rodar o projeto localmente, recomendo as seguintes versões:
+* **Python:** 3.12.4 (ou superior)
+* **Pandas:** 2.3.3
+* **Plotly:** 6.5.0
+* **Streamlit:** 1.51.0
 
-python: 3.12.4 or latest.
+Para explorar o arquivo `EDA.ipynb` na pasta `notebooks`, recomendo a utilização do **VS Code** com a extensão do Jupyter instalada.
 
-pandas: 2.3.3
+## ⚙️ Executando Localmente
 
-plotly: 6.5.0
+Se desejar clonar o projeto e rodar o aplicativo `app.py` na sua máquina, siga este passo a passo:
 
-streamlit: 1.51.0
+1. Abra o seu terminal (ex: Anaconda Prompt).
+2. Crie um ambiente virtual (recomendado):
+```bash
+conda create -n vehicles_env python=3.12.4
+```
+3. Ative o ambiente virtual:
+```bash
+conda activate vehicles_env
+```
 
+4. Instale as dependências listadas no arquivo `requirements.txt`:
+```bash
+pip install -r requirements.txt
+```
 
-## ⚙️ Executando os testes
-**[Aplicativo Web](https://project-vehicles-dashboard.onrender.com):**
-1. Selecione a caixa "Filter" para iniciar.
-2. Insira um valor mínimo e máximo para criar uma tabela filtrada do banco de dados de veículos.
-3. Selecione a fabricante desejada, e após isso o modelo do veículo.
+5. Execute o aplicativo web:
+```bash
+streamlit run app.py
+```
 
-**Para execução do aplicativo localmente - app.py:**
-1. Abra seu terminal Anaconda.
-2. Defina um ambiente virtual para utilização (se não houver nenhum configurado): $ conda create -n env exemplo_env
-3. Ative o ambiente virtual: $ conda activate exemplo_env
-4. Instale as bibliotecas recomendadas em [requirements](https://github.com/GilbertsMartins/Project-vehicles-dashboard/blob/main/requirement.txt) ou no tópico de **[instalação](#-Insta%C3%A7%C3%A3o)**.
-5. Rode o arquivo app.py no terminal com o seguinte código: $ streamlit run app.py
-6. Será iniciada uma aba no seu navegador padrão automaticamente, caso não ocorra, pode acessar via o seguinte link: [App_Teste](http://localhost:10000)
-7. Siga o mesmo passo-a-passo dado ao aplicativo web acima.
-8. Se quiser parar o teste, volte ao seu terminal e aperte: CTRL + C
-9. Desative seu ambiente virtual: $ conda deactivate
+O Streamlit abrirá automaticamente uma nova aba no seu navegador padrão. Caso não abra, acesse o link local fornecido no terminal (geralmente `http://localhost:8501`).
 
-**Para execução do arquivo no jupyter notebook - EDA.ipynb:**
-1. Abra o arquivo no editor compatível.
-2. Rode os códigos normalmente.
-3. O programa irá requistar que seja inserido alguns dados para fins de realizar filtragens.
-4. Estará explícito as informações necessárias para dar continuidade ao processo de análise e criação dos gráficos interativos.
+Para encerrar a execução no terminal, pressione `CTRL + C` e, em seguida, desative o ambiente com `conda deactivate`.
+
+---
+
+## 📊 Utilizando o Dashboard
+
+* Utilize a barra lateral para **Filtrar** os dados.
+* Insira um valor mínimo e máximo de preço para refinar a busca.
+* Selecione a fabricante e, em seguida, o modelo específico do veículo para visualizar os gráficos interativos e a tabela de dados brutos.
 
 ## 🛠️ Construído com
 
-* [Python](https://www.python.org/downloads/release/python-3124/) - Linguagem de programação usada
-* [VsCode](https://code.visualstudio.com) - IDE usada
-* [Streamlit](https://streamlit.io) - Biblioteca usada para criação do aplicativo web
-* [Render](https://render.com) - Plataforma cloud usada
+* **[Python](https://www.python.org/)** - Linguagem principal
+* **[Streamlit](https://streamlit.io/)** - Framework para o Web App
+* **[Plotly](https://plotly.com/) & [Pandas](https://pandas.pydata.org/)** - Análise e Visualização de Dados
+* **[Render](https://render.com/)** - Plataforma de Cloud Hosting
 
-## ✒️ Autores
+## ✒️ Autor
 
-Gilbert Martins - Desenvolvimento & Documentação - [GilbertsMartins](https://github.com/GilbertsMartins)
+* **Gilbert Martins** - Desenvolvimento e Documentação - [GilbertsMartins](https://github.com/GilbertsMartins)
