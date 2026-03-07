@@ -42,7 +42,7 @@ pip install -r requirements.txt
 
 5. Execute o aplicativo web:
 ```bash
-streamlit run app.py
+streamlit run navigation.py
 ```
 
 O Streamlit abrirá automaticamente uma nova aba no seu navegador padrão. Caso não abra, acesse o link local fornecido no terminal (geralmente `http://localhost:8501`).
