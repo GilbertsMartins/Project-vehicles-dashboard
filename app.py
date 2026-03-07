@@ -94,7 +94,7 @@ filtered_cars['year_range'] = pd.cut(filtered_cars['model_year'],
 fig = px.histogram(filtered_cars, x='price', 
                         title=(f'Distribution of Prices - {hist_option_brand} | {hist_option_model}'), 
                         color='year_range',
-                        labels={'price': 'Price ($USD)', 'year_range': 'Model Year Range'})
+                        labels={'count': 'Count','price': 'Price ($USD)', 'year_range': 'Model Year Range'})
 # criar um gráfico de dispersão
 fig2 = px.scatter(filtered_cars, 
                  x='model_year', 
@@ -113,10 +113,10 @@ with col2:
 
 # verificando se as duas variáveis contêm números válidos
 if by_price_min is not None and by_price_max is not None:
-    st.subheader('Tipos de Veículos Disponíveis (${:,.0f} - {:,.0f})'.format(by_price_min, by_price_max))
+    st.subheader('Available Vehicle Types (${:,.0f} - {:,.0f})'.format(by_price_min, by_price_max))
 else:
     # título alternativo de segurança caso o utilizador apague os números do filtro
-    st.subheader("Tipos de Veículos Disponíveis")
+    st.subheader("Available Vehicle Types")
 
 # o parâmetro 'normalize=True' devolve a proporção de 0 a 1 em vez da contagem absoluta
 type_percentages = filter_by_price['type'].value_counts(normalize=True)
@@ -129,8 +129,7 @@ filter_by_price['type_grouped'] = filter_by_price['type'].replace(types_to_group
 fig = px.bar(filter_by_price, 
              y='type_grouped', 
              color='type_grouped', 
-             title='Distribution of Vehicle Types',
-             labels={'manufacture': 'Manufacture', 'type_grouped': 'Vehicle Type'},
+             labels={'manufacture': 'Manufacture', 'type_grouped': 'Vehicle Type', 'count': 'Count'},
              orientation='h')
 # exibir um gráfico plotly interativo
 st.plotly_chart(fig, width='stretch')
